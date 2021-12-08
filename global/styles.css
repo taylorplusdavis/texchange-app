@@ -3,10 +3,35 @@
 @tailwind utilities;
 
 @layer components {
-  .navButton {
-    @apply text-white h-10 p-1 cursor-pointer drop-shadow-md;
+  .break {
+    @apply inline-flex justify-self-center my-4 w-[75%] place-self-center;
   }
+
   .navLink {
-    @apply text-white text-xl font-extralight mx-6 cursor-pointer hidden md:inline-flex drop-shadow-md;
+    @apply hidden md:flex text-black text-base font-extralight cursor-pointer items-center hover:bg-gray-50 hover:border-blue-600;
+  }
+
+  .navLinkActive {
+    @apply hidden md:flex text-black text-base cursor-pointer items-center font-semibold;
+  }
+
+  .navIcon {
+    @apply h-12 text-lg font-extralight cursor-pointer flex text-black p-2;
+  }
+
+  .navIconActive {
+    @apply h-12 text-lg font-extralight cursor-pointer flex text-blue-600 p-2;
+  }
+
+  .link {
+    @apply hover:bg-gray-50 flex items-center justify-center md:justify-start hover:border-blue-600 cursor-pointer;
+  }
+
+  .linkActive {
+    @apply hover:bg-gray-50 flex items-center justify-center md:justify-start border-l-4 cursor-pointer border-blue-600;
+  }
+
+  .courseContainer {
+    @apply cursor-pointer;
   }
 }

@@ -3,6 +3,11 @@ import {
   SearchIcon as SearchIconOutline,
   UserCircleIcon as UserCircleIconOutline,
   BookOpenIcon as BookOpenIconOutline,
+  HomeIcon,
+  PencilIcon,
+  QuestionMarkCircleIcon,
+  ShieldCheckIcon,
+  LogoutIcon,
 } from "@heroicons/react/outline";
 
 import {
@@ -13,102 +18,115 @@ import {
 } from "@heroicons/react/solid";
 import { animate, motion } from "framer-motion";
 import { useState } from "react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { data } from "autoprefixer";
+import Image from "next/image";
 
 const container = {
   hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
+  show: {},
 };
 
 const item = {
-  hidden: { y: -100 },
-  show: { y: 0 },
+  hidden: { x: 0, opacity: 0 },
+  show: { x: 0, opacity: 1 },
 };
 
 function Header() {
+  const { data: session } = useSession();
+  console.log(session);
   const [search, setSearch] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSearch("");
-    console.log(search);
-  };
 
   return (
     <motion.nav
       variants={container}
       initial="hidden"
       animate="show"
-      className="flex justify-between items-center  shadow-md backdrop-blur-sm  z-50 bg-transparent rounded-b-3xl sticky top-0"
+      className="flex flex-col z-50 bg-gray-100"
     >
-      {/* Left */}
-      <motion.h1
-        variants={item}
-        whileHover={{ scale: 1.2 }}
-        className="logoContainer flex items-center font-semibold text-white text-2xl p-4 cursor-pointer"
+      <motion.div
+        className="linksContainer flex flex-col justify-between"
+        variants={container}
+        initial="hidden"
+        animate="show"
       >
-        <BookOpenIcon className="h-12 mr-2" />
-        <p className="hidden md:inline-flex">TeXchange</p>
-      </motion.h1>
-
-      {/* Middle */}
-
-      <form onSubmit={handleSubmit} className="flex flex-grow justify-center">
-        <motion.div
+        {/* Top */}
+        <motion.h1
           variants={item}
-          className="searchContainer flex md:flex-grow max-w-md md:border md:rounded-full md:shadow-lg md:bg-white transition-all duration-100 ease-out"
+          initial="hidden"
+          animate="show"
+          className="logoContainer flex items-center justify-center place font-bold text-blue-600 text-2xl p-4 cursor-pointer relative"
         >
-          <motion.input
-            type="text"
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-            }}
-            placeholder="Start searching books and courses..."
-            className="w-1/2 md:w-auto border-b md:border-none md:inline-flex flex-grow bg-transparent text-white placeholder-white md:placeholder-gray-500 outline-none  focus:text-white md:focus:text-purple-800 focus:placeholder-purple-500 transition-all duration-100 ease-out px-4 mb-2 py-1 md:mb-0 md:py-0 "
-            style="search"
-          />
+          <BookOpenIcon className="h-10 mr-2 mt-1" />
+          <p className="hidden md:inline-flex">TeXchange</p>
+        </motion.h1>
+        <motion.br className="break" />
 
-          <SearchIconOutline className="navButton mr-3  hidden md:inline-flex mx-auto text-white md:text-blue-700" />
+        {/* UserInfo */}
+        {session && (
+          <motion.div
+            variants={item}
+            initial="hidden"
+            animate="show"
+            className="userContainer hidden md:flex flex-col items-center justify-center place font-bold text-base cursor-pointer -mt-6 mb-4"
+          >
+            <img
+              src={session.user.image}
+              className="h-16 rounded-full"
+              alt="profile pic"
+            />
+            <motion.p className="">{session.user.name}</motion.p>
+          </motion.div>
+        )}
+
+        <motion.div variants={item} className="space-y-4">
+          <motion.div className="linkActive">
+            <HomeIcon className="navIconActive" />
+            <motion.p className="navLinkActive">Home</motion.p>
+          </motion.div>
         </motion.div>
-      </form>
+        <hr className="break" />
 
-      {/* Right */}
-      <motion.div variants={item} className="rightContainer flex p-2">
-        <motion.div
-          variants={container}
-          className="buttonsContainer flex items-center"
-        >
-          <motion.p
-            whileHover={{ scale: 1.2 }}
-            variants={item}
-            className="navLink"
-          >
-            Home
-          </motion.p>
-          <motion.p
-            whileHover={{ scale: 1.2 }}
-            variants={item}
-            className="navLink"
-          >
-            Textbooks
-          </motion.p>
-          <motion.p
-            whileHover={{ scale: 1.2 }}
-            variants={item}
-            className="navLink"
-          >
-            Courses
-          </motion.p>
-          <motion.div variants={item}>
-            <MenuIcon className="navButton md:hidden" />
-          </motion.div>
-          <motion.div variants={item}>
-            <UserCircleIcon className="navButton md:h-12 rounded-full " />
-          </motion.div>
+        {session && (
+          <>
+            <motion.div variants={item} className="space-y-4">
+              <div className="link">
+                <PencilIcon className="navIcon" />
+                <motion.p className="navLink">My Courses</motion.p>
+              </div>
+              <div className="link">
+                <BookOpenIconOutline className="navIcon" />
+                <motion.p className="navLink">My Books</motion.p>
+              </div>
+            </motion.div>
+            <hr className="break" />
+          </>
+        )}
+
+        {/* Bottom */}
+        <motion.div variants={item} className="space-y-4">
+          <div className="link">
+            <QuestionMarkCircleIcon className="navIcon" />
+            <motion.p className="navLink">About</motion.p>
+          </div>
+
+          <div className="link">
+            <ShieldCheckIcon className="navIcon" />
+            <motion.p className="navLink">Privacy & Security</motion.p>
+          </div>
+
+          <div variants={item} className="link">
+            <LogoutIcon className="navIcon" />
+            {session ? (
+              <motion.button className="navLink" onClick={signOut}>
+                Sign Out
+              </motion.button>
+            ) : (
+              <motion.button className="navLink" onClick={signIn}>
+                Sign In
+              </motion.button>
+            )}
+          </div>
         </motion.div>
       </motion.div>
     </motion.nav>

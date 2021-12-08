@@ -26,7 +26,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col bg-purple-900 min-h-screen ">
+    <div className="flex bg-blue-600 min-h-screen ">
       <Head>
         <title>TeXchange</title>
         <link rel="icon" href="/favicon.ico" />
@@ -36,7 +36,6 @@ export default function Home() {
       {/* Main */}
       <Hero />
       {/* Footer */}
-      <Hero />
     </div>
   );
 }

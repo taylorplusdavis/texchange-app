@@ -1,72 +1,122 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 const container = {
   hidden: { y: 100 },
   show: {
     y: 0,
     transition: {
-      staggerChildren: 1,
-      ease: "anticipate",
+      staggerChildren: 0.3,
     },
   },
 };
 
 const item = {
-  hidden: { y: 100, opacity: 0 },
+  hidden: { y: 200, opacity: 0 },
   show: { y: 0, opacity: 1 },
 };
 
 function Hero() {
-  return (
-    <div className="absolute bg-white h-screen w-full shadow-inner cursor-default">
-      <Image
-        src="https://images.unsplash.com/photo-1558901357-ca41e027e43a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1239&q=80"
-        layout="fill"
-        objectFit="cover"
-        className="opacity-95"
-      />
+  const { data: session } = useSession();
 
-      <motion.div
-        initial="hidden"
-        animate="show"
-        transition="transition"
-        className="absolute font-light text-3xl text-white w-screen"
-      >
+  return (
+    <>
+      {session ? (
         <motion.div
           variants={container}
           initial="hidden"
           animate="show"
-          className="flex flex-col relative justify-center items-center h-[38rem] text-left p-6 space-y-10 drop"
+          className="container flex flex-col mx-auto"
         >
-          <motion.p
+          {/* Search */}
+          <motion.input
             variants={item}
-            initial="hidden"
-            animate="show"
-            className="backdrop-blur-sm p-3 rounded-2xl drop-shadow-md shadow-lg opacity-90 py-10 text-center"
-          >
-            Turn your{" "}
-            <span className="text-blue-700 font-semibold">
-              textbooks <br />
-            </span>{" "}
-            into <br />
-            <span className="text-blue-700 font-semibold">ex-books</span>
-          </motion.p>
-
-          <motion.button
+            placeholder="Search..."
+            className="p-4 md:mt-5"
+          />
+          {/* My Courses */}
+          <motion.div
             variants={item}
-            initial="hidden"
-            animate="show"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-blue-700 rounded-full py-2 px-8 font-semibold drop-shadow-md items-center justify-center shadow-lg "
+            transition="transition"
+            className="midContainer mt-5 md:grid-cols-2 grid"
           >
-            Start here
-          </motion.button>
+            <div className="coursesContainer bg-gray-100 rounded-lg space-y-2 mx-2 p-2">
+              <p className="font-semibold text-xl text-blue-700 cursor-default">
+                My Courses
+              </p>
+              <div className="courseContainer">
+                <p className="courseTitle text-2xl">CSC 3380</p>
+                <p className="courseDesc text-base">Product Design</p>
+                <hr className="break m-0 w-full" />
+              </div>
+              <div className="courseContainer">
+                <p className="courseTitle text-2xl">CSC 4101</p>
+                <p className="courseDesc text-base">Programming Languages</p>
+                <hr className="break m-0 w-full" />
+              </div>
+              <div className="courseContainer">
+                <p className="courseTitle text-2xl">CSC 2262</p>
+                <p className="courseDesc text-base">Numerical Methods</p>
+              </div>
+            </div>
+            {/* My Books */}
+            <motion.div
+              variants={item}
+              className="booksContainer bg-gray-100 rounded-lg p-2 space-y-2 mt-5 md:mt-0 mx-2"
+            >
+              <p className="font-semibold text-xl text-blue-700 cursor-default">
+                My Books
+              </p>
+              <div className="courseContainer">
+                <p className="courseTitle text-2xl">
+                  Numerical Methods Book Title
+                </p>
+                <p className="courseDesc text-base">for CSC 2262</p>
+                <hr className="break m-0 w-full" />
+              </div>
+              <div className="courseContainer">
+                <p className="courseTitle text-2xl">
+                  Programming Languages Book Title
+                </p>
+                <p className="courseDesc text-base">for CSC 4101</p>
+                <hr className="break m-0 w-full" />
+              </div>
+              <div className="courseContainer">
+                <p className="courseTitle text-2xl">
+                  Product Design Book Title
+                </p>
+                <p className="courseDesc text-base">for CSC 3380</p>
+              </div>
+            </motion.div>
+            {/* Account Settings */}
+            <motion.div
+              variants={item}
+              className="accountContainer bg-gray-100 rounded-lg p-2 mx-2 mt-5 mb-5"
+            >
+              <p className="text-xl font-semibold text-blue-700 cursor-default">
+                Account Settings
+              </p>
+              <button className="">Go to account settings</button>
+            </motion.div>
+          </motion.div>
         </motion.div>
-      </motion.div>
-    </div>
+      ) : (
+        <div className="flex flex-col justify-center items-center mx-auto">
+          <p className="text-4xl text-center mt-5 font-semibold text-white">
+            Welcome to TeXchange!
+          </p>
+          <p className="text-lg">Sign in to continue..</p>
+        </div>
+      )}
+    </>
   );
 }
 
 export default Hero;
+
+export async function getServerSideProps(context) {
+  return {
+    props: { user },
+  };
+}
