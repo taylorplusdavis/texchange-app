@@ -116,15 +116,20 @@ function Header() {
           </div>
 
           <div variants={item} className="link">
-            <LogoutIcon className="navIcon" />
             {session ? (
-              <motion.button className="navLink" onClick={signOut}>
-                Sign Out
-              </motion.button>
+              <>
+                <LogoutIcon onClick={signOut} className="navIcon" />
+                <motion.button className="navLink" onClick={signOut}>
+                  Sign Out
+                </motion.button>
+              </>
             ) : (
-              <motion.button className="navLink" onClick={signIn}>
-                Sign In
-              </motion.button>
+              <>
+                <LogoutIcon onClick={signIn} className="navIcon" />
+                <motion.button className="navLink" onClick={signIn}>
+                  Sign In
+                </motion.button>
+              </>
             )}
           </div>
         </motion.div>
