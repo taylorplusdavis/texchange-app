@@ -41,19 +41,17 @@ function Hero() {
             transition="transition"
             className="midContainer mt-5 md:grid-cols-2 grid"
           >
-            <div className="coursesContainer bg-gray-100 rounded-lg space-y-2 mx-2 p-2">
-              <p className="font-semibold text-xl text-blue-700 cursor-default">
+            <div className="coursesContainer bg-gray-100 rounded-lg  mx-2 shadow-lg">
+              <p className="cardTitle font-semibold text-xl text-blue-700 cursor-default">
                 My Courses
               </p>
               <div className="courseContainer">
                 <p className="courseTitle text-2xl">CSC 3380</p>
                 <p className="courseDesc text-base">Product Design</p>
-                <hr className="break m-0 w-full" />
               </div>
               <div className="courseContainer">
                 <p className="courseTitle text-2xl">CSC 4101</p>
                 <p className="courseDesc text-base">Programming Languages</p>
-                <hr className="break m-0 w-full" />
               </div>
               <div className="courseContainer">
                 <p className="courseTitle text-2xl">CSC 2262</p>
@@ -63,9 +61,9 @@ function Hero() {
             {/* My Books */}
             <motion.div
               variants={item}
-              className="booksContainer bg-gray-100 rounded-lg p-2 space-y-2 mt-5 md:mt-0 mx-2"
+              className="booksContainer bg-gray-100 rounded-lg mt-5 md:mt-0 mx-2 shadow-lg"
             >
-              <p className="font-semibold text-xl text-blue-700 cursor-default">
+              <p className="cardTitle font-semibold text-xl text-blue-700 cursor-default">
                 My Books
               </p>
               <div className="courseContainer">
@@ -73,14 +71,12 @@ function Hero() {
                   Numerical Methods Book Title
                 </p>
                 <p className="courseDesc text-base">for CSC 2262</p>
-                <hr className="break m-0 w-full" />
               </div>
               <div className="courseContainer">
                 <p className="courseTitle text-2xl">
                   Programming Languages Book Title
                 </p>
                 <p className="courseDesc text-base">for CSC 4101</p>
-                <hr className="break m-0 w-full" />
               </div>
               <div className="courseContainer">
                 <p className="courseTitle text-2xl">
@@ -92,12 +88,12 @@ function Hero() {
             {/* Account Settings */}
             <motion.div
               variants={item}
-              className="accountContainer bg-gray-100 rounded-lg p-2 mx-2 mt-5 mb-5"
+              className="accountContainer bg-gray-100 rounded-lg mx-2 mt-5 mb-5 shadow-lg"
             >
-              <p className="text-xl font-semibold text-blue-700 cursor-default">
+              <p className="cardTitle text-xl font-semibold text-blue-700 cursor-default">
                 Account Settings
               </p>
-              <button className="">Go to account settings</button>
+              <button className="p-2">Go to account settings</button>
             </motion.div>
           </motion.div>
         </motion.div>
