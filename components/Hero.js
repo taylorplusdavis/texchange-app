@@ -47,7 +47,7 @@ function Hero() {
               </p>
               <div className="courseContainer">
                 <p className="courseTitle text-2xl">CSC 3380</p>
-                <p className="courseDesc text-base">Product Design</p>
+                <p className="courseDesc text-base">Object Oriented Design</p>
               </div>
               <div className="courseContainer">
                 <p className="courseTitle text-2xl">CSC 4101</p>
@@ -80,7 +80,7 @@ function Hero() {
               </div>
               <div className="courseContainer">
                 <p className="courseTitle text-2xl">
-                  Product Design Book Title
+                  Object Oriented Book Title
                 </p>
                 <p className="courseDesc text-base">for CSC 3380</p>
               </div>
