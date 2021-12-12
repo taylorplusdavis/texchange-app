@@ -18,10 +18,14 @@ const item = {
 };
 
 function Hero() {
+  // Extract the data object from session to be used later
   const { data: session } = useSession();
 
   return (
     <>
+      {/* Here we check to see if session data exists i.e, the user is logged in. If the user
+      is logged in, render the normal TeXchange feed. If the user is not logged in, then
+      render the welcome screen */}
       {session ? (
         <motion.div
           variants={container}
@@ -45,6 +49,7 @@ function Hero() {
               <p className="cardTitle font-semibold text-xl text-blue-700 cursor-default">
                 My Courses
               </p>
+              {/* In a full build, these would be populated with data pulled from the Firebase system */}
               <div className="courseContainer">
                 <p className="courseTitle text-2xl">CSC 3380</p>
                 <p className="courseDesc text-base">Object Oriented Design</p>
@@ -90,6 +95,7 @@ function Hero() {
               variants={item}
               className="accountContainer bg-gray-100 rounded-lg mx-2 mt-5 mb-5 shadow-lg"
             >
+              {/* This would allow users to go to the account settings homepage */}
               <p className="cardTitle text-xl font-semibold text-blue-700 cursor-default">
                 Account Settings
               </p>
@@ -111,6 +117,7 @@ function Hero() {
 
 export default Hero;
 
+/* Asynchronous function that loads the user data. */
 export async function getServerSideProps(context) {
   return {
     props: { user },

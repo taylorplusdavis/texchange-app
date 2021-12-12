@@ -22,11 +22,13 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { data } from "autoprefixer";
 import Image from "next/image";
 
+// Motion attributes for Framer Motion
 const container = {
   hidden: {},
   show: {},
 };
 
+// Motion attributes for Framer Motion. Creates a fade in effect.
 const item = {
   hidden: { x: 0, opacity: 0 },
   show: { x: 0, opacity: 1 },
@@ -62,7 +64,7 @@ function Header() {
         </motion.h1>
         <motion.br className="break" />
 
-        {/* UserInfo */}
+        {/* UserInfo, populated only when there is a session active */}
         {session && (
           <motion.div
             variants={item}
@@ -78,7 +80,7 @@ function Header() {
             <motion.p className="">{session.user.name}</motion.p>
           </motion.div>
         )}
-
+        {/* Navigation buttons */}
         <motion.div variants={item} className="space-y-4">
           <motion.div className="linkActive">
             <HomeIcon className="navIconActive" />
@@ -116,6 +118,7 @@ function Header() {
           </div>
 
           <div variants={item} className="link">
+            {/* If a session exists, show the logout button, otherwise, show the login button */}
             {session ? (
               <>
                 <LogoutIcon onClick={signOut} className="navIcon" />
